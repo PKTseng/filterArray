@@ -41,40 +41,38 @@ let payloadList = [
       },
     ],
   },
-  // {
-  //   access_token: '737f0c2f8d0a9ddb72f8dd9a',
-  //   data: [
-  //     {
-  //       ts: 1669272948132,
-  //       values: {
-  //         meter_type: 'PM-B1L3-W1-001',
-  //         energy: 'PowerMeter',
-  //         voltage: 38.5,
-  //         current: 23.939076,
-  //         power: 3.845779,
-  //       },
-  //     },
-  //     {
-  //       ts: 1669272948135,
-  //       values: {
-  //         meter_type: 'PM-B1L3-W1-001',
-  //         energy: 'PowerMeter',
-  //         voltage: 38.5,
-  //         current: 23.939076,
-  //         power: 3.845779,
-  //       },
-  //     },
-  //   ],
-  // },
+  {
+    access_token: '737f0c2f8d0a9ddb72f8dd9a',
+    data: [
+      {
+        ts: 1669272948132,
+        values: {
+          meter_type: 'PM-B1L3-W1-001',
+          energy: 'PowerMeter',
+          voltage: 38.5,
+          current: 23.939076,
+          power: 3.845779,
+          test1: 'test22',
+          test2: 'test2333',
+        },
+      },
+      {
+        ts: 1669272948135,
+        values: {
+          meter_type: 'PM-B1L3-W1-001',
+          energy: 'PowerMeter',
+          voltage: 38.5,
+          current: 23.939076,
+          power: 3.845779,
+          test1: 'test22222',
+          test2: 'test2333222',
+        },
+      },
+    ],
+  },
 ]
 
 let finalList = []
-
-const defineTypeKey = Object.keys(defineType)
-const defineTypeValue = Object.values(defineType)
-
-// console.log(JSON.parse(JSON.stringify(defineTypeKey)))
-//['meter_type', 'remark', 'voltage', 'current', 'power', 'pf', 'energy', 'immediate_demand']
 
 function filterPayload() {
   payloadList.forEach((payload, payloadIndex) => {
