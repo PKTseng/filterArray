@@ -77,17 +77,17 @@ let finalList = []
 function filterPayload() {
   payloadList.forEach((payload, payloadIndex) => {
     payload.data.forEach((data, dataIndex) => {
-      let newValue = []
+      let newArray = []
 
       Object.entries(data.values).forEach(([key, value]) => {
-        Object.keys(defineType).forEach((type) => {
-          if (key === type) {
-            newValue.push({ [key]: value })
+        Object.entries(defineType).forEach(([typeKey, typeValue]) => {
+          if (key === typeKey && typeof value === typeValue) {
+            newArray.push({ [key]: value })
           }
         })
       })
 
-      let transformObj = newValue.reduce((acc, current) => {
+      let transformObj = newArray.reduce((acc, current) => {
         return Object.assign(acc, current)
       }, {})
 
