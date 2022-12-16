@@ -77,30 +77,29 @@ const defineTypeValue = Object.values(defineType)
 //['meter_type', 'remark', 'voltage', 'current', 'power', 'pf', 'energy', 'immediate_demand']
 
 function filterPayload() {
-  // let newArr =
-
   payloadList.forEach((payload, payloadIndex) => {
-    // console.log(JSON.parse(JSON.stringify(payload.data)))
     payload.data.forEach((data, dataIndex) => {
-      // console.log(JSON.parse(JSON.stringify(data.values)))
-
       let newValue = []
-      Object.entries(data.values).map(([key, value]) => {
-        Object.keys(defineType).map((type) => {
+
+      Object.entries(data.values).forEach(([key, value]) => {
+        Object.keys(defineType).forEach((type) => {
           if (key === type) {
             newValue.push({ [key]: value })
-            // return { [key]: [value] }
           }
         })
       })
 
-      console.log(JSON.parse(JSON.stringify(newValue)))
-      // console.log(JSON.parse(JSON.stringify(test)))
+      let transformObj = newValue.reduce((acc, current) => {
+        return Object.assign(acc, current)
+      }, {})
+
+      payloadList[payloadIndex].data[dataIndex].values = transformObj
+
+      finalList = payloadList
     })
   })
-}
-// console.log(JSON.parse(JSON.stringify(finalList)))
 
-// console.log(JSON.parse(JSON.stringify(finalList)))
+  console.log(finalList)
+}
 
 filterPayload()
