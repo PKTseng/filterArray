@@ -71,14 +71,13 @@ let payloadList = [
     ],
   },
 ]
-
+let newArray = []
+let transformObj = {}
 let finalList = []
 
 function filterPayload() {
   payloadList.forEach((payload, payloadIndex) => {
     payload.data.forEach((data, dataIndex) => {
-      let newArray = []
-
       Object.entries(data.values).forEach(([key, value]) => {
         Object.entries(defineType).forEach(([typeKey, typeValue]) => {
           if (key === typeKey && typeof value === typeValue) {
@@ -87,17 +86,16 @@ function filterPayload() {
         })
       })
 
-      let transformObj = newArray.reduce((acc, current) => {
+      transformObj = newArray.reduce((acc, current) => {
         return Object.assign(acc, current)
       }, {})
 
       payloadList[payloadIndex].data[dataIndex].values = transformObj
-
-      finalList = payloadList
     })
   })
-
-  console.log(finalList)
 }
 
 filterPayload()
+
+finalList = payloadList
+console.log(finalList)
