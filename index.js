@@ -77,25 +77,33 @@ let finalList = []
 
 function filterPayload() {
   payloadList.forEach((payload, payloadIndex) => {
-    payload.data.forEach((data, dataIndex) => {
-      Object.entries(data.values).forEach(([key, value]) => {
-        Object.entries(defineType).forEach(([typeKey, typeValue]) => {
-          if (key === typeKey && typeof value === typeValue) {
-            newArray.push({ [key]: value })
-          }
-        })
-      })
-
-      transformObj = newArray.reduce((acc, current) => {
-        return Object.assign(acc, current)
-      }, {})
-
-      payloadList[payloadIndex].data[dataIndex].values = transformObj
+    payload.data.forEach(async (data, dataIndex) => {
+      await filterKeyAndType(data.values)
+      await putOnValues(payloadIndex, dataIndex)
     })
   })
 }
 
-filterPayload()
+// 將 values 變成陣列，從陣列中比對 key 跟 value 的 type
+function filterKeyAndType(values) {
+  Object.entries(values).forEach(([key, value]) => {
+    Object.entries(defineType).forEach(([typeKey, typeValue]) => {
+      if (key === typeKey && typeof value === typeValue) {
+        newArray.push({ [key]: value })
+      }
+    })
+  })
+}
 
+// 將陣列轉成物件並取代原本的 values
+function putOnValues(payloadIndex, dataIndex) {
+  transformObj = newArray.reduce((acc, current) => {
+    return Object.assign(acc, current)
+  }, {})
+
+  payloadList[payloadIndex].data[dataIndex].values = transformObj
+}
+
+filterPayload()
 finalList = payloadList
 console.log(finalList)
