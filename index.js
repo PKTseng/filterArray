@@ -71,31 +71,34 @@ let payloadList = [
     ],
   },
 ];
-let newArray = {};
-let transformObj = {};
+
 let finalList = JSON.parse(JSON.stringify(payloadList));
 
 function filterPayload() {
+  let newValue = {};
   finalList.forEach((payload) => {
     try {
       payload.data.forEach((data) => {
         console.log(data.values);
-        Object.keys(defineType).forEach((item) => {
-          console.log(data.values[key]);
-
-          if (data.values[key]) {
-            console.log(item);
+        for (const key in data.values) {
+          if (defineType[key] === undefined) {
+            continue;
           }
 
-          if (item === data.values[key]) {
-            console.log(item);
+          const type = defineType[key];
+
+          if (typeof data.values[key] !== type) {
+            continue;
           }
-        });
+
+          newValue[key] = data.values[key];
+        }
       });
     } catch (error) {
       console.log(error);
     }
   });
+  return newValue;
 }
 
-// filterPayload();
+filterPayload();

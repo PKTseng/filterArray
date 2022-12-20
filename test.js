@@ -19,12 +19,9 @@ const values = {
   test1: "test1",
 };
 
-let newArray = [];
-
 function filterPayload() {
-  let r = {};
+  let newValue = {};
   for (const key in values) {
-    // console.log(key);
     if (defineType[key] === undefined) {
       continue;
     }
@@ -36,23 +33,8 @@ function filterPayload() {
     }
 
     r[key] = values[key];
-    // console.log(defineType[key]);
-
-    // if (Object.hasOwnProperty.call(defineType, key)) {
-    //   const element = defineType[key];
-    //   console.log(element);
-    // }
   }
-  console.log(r);
-  return r;
-
-  // Object.entries(values).forEach(([key, value]) => {
-  //   Object.entries(defineType).forEach(([typeKey, typeValue]) => {
-  //     if (key === typeKey && typeof value === typeValue) {
-  //       newArray.push({ [key]: value });
-  //     }
-  //   });
-  // });
+  return newValue;
 }
 
 filterPayload();
