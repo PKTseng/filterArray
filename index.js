@@ -1,12 +1,28 @@
 const defineType = {
-  meter_type: "string",
-  remark: "string",
-  voltage: "number",
+  alive: "number",
   current: "number",
-  power: "number",
-  pf: "number",
+  current_r: "number",
+  current_s: "number",
+  current_t: "number",
+  demand: "number",
   energy: "number",
   immediate_demand: "number",
+  meter_type: "string",
+  pf: "number",
+  power: "number",
+  remark: "string",
+  temperature_r: "number",
+  temperature_s: "number",
+  temperature_t: "number",
+  voltage: "number",
+  voltage_avg: "number",
+  voltage_line_avg: "number",
+  voltage_r: "number",
+  voltage_r_s: "number",
+  voltage_s: "number",
+  voltage_s_t: "number",
+  voltage_t: "number",
+  voltage_t_r: "number",
 };
 
 let payloadList = [
@@ -72,33 +88,28 @@ let payloadList = [
   },
 ];
 
-let finalList = JSON.parse(JSON.stringify(payloadList));
-
-function filterPayload() {
-  let newValue = {};
-  finalList.forEach((payload) => {
+function filterPayload(payload) {
+  payload.forEach((deviceTelemetry) => {
     try {
-      payload.data.forEach((data) => {
-        console.log(data.values);
+      deviceTelemetry.data.forEach((data) => {
+        let newValue = {};
         for (const key in data.values) {
           if (defineType[key] === undefined) {
             continue;
           }
-
           const type = defineType[key];
-
           if (typeof data.values[key] !== type) {
             continue;
           }
-
           newValue[key] = data.values[key];
         }
+        data.values = newValue;
       });
     } catch (error) {
       console.log(error);
     }
   });
-  return newValue;
 }
 
-filterPayload();
+// msg.payload =
+filterPayload(payloadList);
